@@ -33,12 +33,6 @@ object templates {
     content.flatMap(s => expression.findFirstMatchIn(s).map(m => m.group(1)))
   }
 
-  /** Parses the schema from a given case class */
-  def parseSchema[A: TypeTag]: Schema = {
-    val tag = typeTag[A]
-    Schema.empty
-  }
-
   /** Represents the schema node */
   sealed trait Member
 
@@ -46,15 +40,15 @@ object templates {
 
     case object string extends Member
 
+    case class option(member: Member) extends Member
+
+    case class list(member: Member) extends Member
+
     case class ref(schema: Schema) extends Member
 
     object ref {
       def apply(members: (String, Member)*): ref = ref(Schema(members: _*))
     }
-
-    // case class list(schema: Schema) extends Member
-
-    case class option(member: Member) extends Member
 
   }
 
@@ -119,23 +113,6 @@ object templates {
         case Some(Member.option(ref: Member.ref)) if !single =>
           Schema(members + (root -> Member.option(Member.ref(ref.schema.withOptPath(subPath, subPrefix)))))
       }
-    }
-
-    private val simpleTypes: Seq[Class[_]] = Seq(classOf[String])
-
-    /** Returns a new schema with the existing member marked as optional or a new optional member */
-    def withTypeMember[A](name: String, tpe: Type): Schema = {
-      val mirror = runtimeMirror(getClass.getClassLoader)
-      val clazz = mirror.runtimeClass(tpe)
-      val member = if (clazz.isPrimitive || simpleTypes.contains(clazz)) {
-        Member.string
-      } else {
-        // tpe.members.foldLeft(Schema.empty)((schema, field) => schema.withTypeMember(field.name, field.typeSignature))
-        // val schema = clazz.getDeclaredFields.foldLeft(Schema.empty)((schema, field) => schema.withTypeMember(field.getName, field.getType))
-        // Member.ref(schema)
-        Member.string
-      }
-      Schema(members + (name -> member))
     }
   }
 
