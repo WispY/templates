@@ -54,7 +54,7 @@ object templates {
 
     // case class list(schema: Schema) extends Member
 
-    case class opt(member: Member) extends Member
+    case class option(member: Member) extends Member
 
   }
 
@@ -98,26 +98,26 @@ object templates {
       val subPrefix = if (prefix.isEmpty) root else s"$prefix.$root"
       members.get(root) match {
         case None if single =>
-          Schema(members + (root -> Member.opt(Member.string)))
+          Schema(members + (root -> Member.option(Member.string)))
         case None if !single =>
           Schema(members + (root -> Member.ref(Schema.empty.withOptPath(subPath, subPrefix))))
 
         case Some(Member.string) if single =>
-          Schema(members + (root -> Member.opt(Member.string)))
+          Schema(members + (root -> Member.option(Member.string)))
         case Some(Member.string) if !single =>
           throw new IllegalArgumentException(s"Member '$subPrefix' cannot be used as ref '$subPrefix.*' and string '$subPrefix' at the same time")
 
         case Some(ref: Member.ref) if single =>
-          Schema(members + (root -> Member.opt(ref)))
+          Schema(members + (root -> Member.option(ref)))
         case Some(ref: Member.ref) if !single =>
           Schema(members + (root -> Member.ref(ref.schema.withOptPath(subPath, subPrefix))))
 
-        case Some(Member.opt(Member.string)) =>
+        case Some(Member.option(Member.string)) =>
           this // no schema changes required
-        case Some(_: Member.opt) if single =>
+        case Some(_: Member.option) if single =>
           this // no schema changes required
-        case Some(Member.opt(ref: Member.ref)) if !single =>
-          Schema(members + (root -> Member.opt(Member.ref(ref.schema.withOptPath(subPath, subPrefix)))))
+        case Some(Member.option(ref: Member.ref)) if !single =>
+          Schema(members + (root -> Member.option(Member.ref(ref.schema.withOptPath(subPath, subPrefix)))))
       }
     }
 

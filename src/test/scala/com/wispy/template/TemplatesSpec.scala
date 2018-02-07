@@ -79,7 +79,7 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
           "firstName" -> string,
           "lastName" -> string,
           "orderId" -> string,
-          "orderClass" -> opt(string)
+          "orderClass" -> option(string)
         )
     )
   }
@@ -106,14 +106,14 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
           "order" -> ref(
             "id" -> string,
             "class" -> string,
-            "amounts" -> opt(
+            "amounts" -> option(
               ref(
                 "total" -> string,
-                "tax" -> opt(string)
+                "tax" -> option(string)
               )
             )
           ),
-          "date" -> opt(string)
+          "date" -> option(string)
         )
     )
   }
@@ -137,7 +137,7 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
           "firstName" -> string,
           "lastName" -> string,
           "orderId" -> string,
-          "orderClass" -> opt(string)
+          "orderClass" -> option(string)
         )
     )
   }
@@ -164,10 +164,10 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
             "class" -> string,
             "amounts" -> ref(
               "total" -> string,
-              "tax" -> opt(string)
+              "tax" -> option(string)
             )
           ),
-          "date" -> opt(string)
+          "date" -> option(string)
         )
     )
   }
@@ -195,14 +195,14 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
           "order" -> ref(
             "id" -> string,
             "class" -> string,
-            "amounts" -> opt(
+            "amounts" -> option(
               ref(
                 "total" -> string,
-                "tax" -> opt(string)
+                "tax" -> option(string)
               )
             )
           ),
-          "date" -> opt(string)
+          "date" -> option(string)
         )
     )
   }
