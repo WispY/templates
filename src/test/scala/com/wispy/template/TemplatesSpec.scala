@@ -1,9 +1,9 @@
 package com.wispy.template
 
 import com.typesafe.scalalogging.LazyLogging
-import org.scalatest.FlatSpec
-import com.wispy.template.templates._
 import com.wispy.template.templates.Member._
+import com.wispy.template.templates._
+import org.scalatest.FlatSpec
 
 /** @author Leonid Poliakov */
 class TemplatesSpec extends FlatSpec with LazyLogging {
@@ -123,7 +123,6 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
     assert(error.getMessage == "Member 'user' cannot be used as ref 'user.*' and string 'user' at the same time")
   }
 
-
   it should "parse flat freemarker template schema with strings and default-opts" in {
     assert(
       parseSchema(
@@ -172,7 +171,6 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
     )
   }
 
-
   it should "parse nested freemarker template schema with refs, strings, if-opts and default-opts" in {
     assert(
       parseSchema(
@@ -207,6 +205,58 @@ class TemplatesSpec extends FlatSpec with LazyLogging {
     )
   }
 
-  case class Model(firstName: String, lastName: String, orderId: Int, category: Option[String])
+  it should "parse plain freemarker template schema with lists and strings" in {
+    assert(
+      parseSchema(
+        """
+          |<#list users as user>
+          |Hello, ${user}
+          |</#list>
+        """.stripMargin) ==
+        Schema(
+          "users" -> list(string)
+        )
+    )
+  }
+
+  it should "parse plain freemarker template schema with two lists and strings" in {
+    assert(
+      parseSchema(
+        """
+          |<#list users as user>
+          |Hello, ${user}
+          |</#list>
+          |${date}
+          |<#list items as item>
+          |Item name: ${item}
+          |</#list>
+        """.stripMargin) ==
+        Schema(
+          "users" -> list(string),
+          "date" -> string,
+          "items" -> list(string)
+        )
+    )
+  }
+
+  it should "parse nested freemarker template schema with nested lists and strings" in {
+    assert(
+      parseSchema(
+        """
+          |<#list users as user>
+          |  Hello, ${user.name}
+          |  <#list user.items as item>
+          |    Item name: ${item}
+          |  </#list>
+          |</#list>
+        """.stripMargin) ==
+        Schema(
+          "users" -> list(ref(
+            "name" -> string,
+            "items" -> list(string)
+          ))
+        )
+    )
+  }
 
 }
