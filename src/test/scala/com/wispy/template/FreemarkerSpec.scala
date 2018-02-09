@@ -1,12 +1,12 @@
 package com.wispy.template
 
 import com.typesafe.scalalogging.LazyLogging
-import com.wispy.template.templates.Member._
-import com.wispy.template.templates._
+import com.wispy.template.freemarker.Member._
+import com.wispy.template.freemarker._
 import org.scalatest.FlatSpec
 
 /** @author Leonid Poliakov */
-class TemplatesSpec extends FlatSpec with LazyLogging {
+class FreemarkerSpec extends FlatSpec with LazyLogging {
 
   it should "parse flat freemarker template schema with strings" in {
     assert(
