@@ -6,7 +6,7 @@ import com.wispy.template.regex._
   *
   * @author Leonid Poliakov
   */
-object freemarker {
+object fm {
   /** Parses the schema from a given freemarker template */
   def parseSchema(template: String): Schema = parseSection(template, Schema.empty, Map())
 

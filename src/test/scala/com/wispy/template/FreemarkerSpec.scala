@@ -1,8 +1,8 @@
 package com.wispy.template
 
 import com.typesafe.scalalogging.LazyLogging
-import com.wispy.template.freemarker.Member._
-import com.wispy.template.freemarker._
+import com.wispy.template.fm.Member._
+import com.wispy.template.fm._
 import org.scalatest.FlatSpec
 
 /** @author Leonid Poliakov */

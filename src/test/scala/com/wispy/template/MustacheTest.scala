@@ -36,4 +36,55 @@ class MustacheTest extends FlatSpec with LazyLogging {
     logger.info(s"$out")
   }
 
+  it should "test" in {
+    val template =
+      """
+        |<!-- path rendering, if-empty-else rendering -->
+        |<p>Hello, {{#user}}{{firstName}} {{middleName}}{{^middleName}}..{{/middleName}} {{lastName}}{{/user}}</p>
+        |
+        |<!-- list iteration -->
+        |{{#attachments}}
+        |  <p>Attachments:</p>
+        |  <ul>
+        |    {{#attachments}}<li>{{.}}</li>{{/attachments}}
+        |  </ul>
+        |{{/attachments}}
+        |
+        |<!-- value switch rendering -->
+        |<!-- not supported -->
+        |
+        |<!-- list of lists iteration: List[List[String]] -->
+        |{{#outer}}
+        |  {{#.}}
+        |    <li>{{.}}</li>
+        |  {{/.}}
+        |{{/outer}}
+        |
+        |<!-- list of refs iteration: List[Map[String, String]] -->
+        |{{#people}}
+        |  <li>{{name}} - {{age}}</li>
+        |{{/people}}
+      """.stripMargin
+
+    case class Person(name: String, age: Int)
+
+    val some = Map(
+      "user" -> Map("firstName" -> "John", "middleName" -> "Jr", "lastName" -> "Smit"),
+      "attachments" -> Seq("a1", "a2"),
+      "status" -> "DENIED",
+      "outer" -> Seq(Seq("00", "01", "02"), Seq("10", "11"), Seq("20")),
+      "people" -> Seq(Person("Peter", 10), Person("Liza", 13))
+    )
+
+    val none = Map(
+      "user" -> Map("firstName" -> "John", "lastName" -> "Smit"),
+      "attachments" -> Seq(),
+      "outer" -> Seq(),
+      "people" -> Seq()
+    )
+
+    render(template, some)
+    render(template, none)
+  }
+
 }

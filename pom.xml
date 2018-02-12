@@ -25,10 +25,23 @@
     <!--<artifactId>handlebars-scala_2.11</artifactId>-->
     <!--<version>2.1.1</version>-->
     <!--</dependency>-->
+
     <dependency>
       <groupId>org.scalatra.scalate</groupId>
       <artifactId>scalate-core_2.12</artifactId>
       <version>1.8.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>3.0.9.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.clapper</groupId>
+      <artifactId>scalasti_2.12</artifactId>
+      <version>3.0.1</version>
     </dependency>
 
     <dependency>
