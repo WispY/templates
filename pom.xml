@@ -38,11 +38,11 @@
       <version>3.0.9.RELEASE</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.clapper</groupId>
-      <artifactId>scalasti_2.12</artifactId>
-      <version>3.0.1</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.clapper</groupId>-->
+      <!--<artifactId>scalasti_2.12</artifactId>-->
+      <!--<version>3.0.1</version>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.scala-lang</groupId>

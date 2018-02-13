@@ -1,7 +1,7 @@
 package com.wispy.template
 
 import com.typesafe.scalalogging.LazyLogging
-import org.clapper.scalasti.ST
+//import org.clapper.scalasti.ST
 import org.scalatest.FlatSpec
 
 /** @author Leonid Poliakov */
@@ -41,14 +41,14 @@ class StringTemplatesTest extends FlatSpec with LazyLogging {
 
     //$outer2:{inner | <li>$inner.name$: $inner.age$</li>}$
 
-    val compiled = ST(template, startDelimiter = '$', endDelimiter = '$')
-
-    val tokenStream = compiled.nativeTemplate.impl.tokens
-    val tokens = (0 until tokenStream.range()).map(i => tokenStream.get(i))
-
-    tokens.foreach { token =>
-      logger.info(s"token [${token.getType}] [${token.getText}]")
-    }
+//    val compiled = ST(template, startDelimiter = '$', endDelimiter = '$')
+//
+//    val tokenStream = compiled.nativeTemplate.impl.tokens
+//    val tokens = (0 until tokenStream.range()).map(i => tokenStream.get(i))
+//
+//    tokens.foreach { token =>
+//      logger.info(s"token [${token.getType}] [${token.getText}]")
+//    }
 
     case class Person(name: String, age: Int)
 
@@ -66,8 +66,8 @@ class StringTemplatesTest extends FlatSpec with LazyLogging {
       "people" -> Seq()
     )
 
-    logger.info(compiled.addAttributes(some).render().get)
-    logger.info(compiled.addAttributes(none).render().get)
+    // logger.info(compiled.addAttributes(some).render().get)
+    // logger.info(compiled.addAttributes(none).render().get)
   }
 
 }
